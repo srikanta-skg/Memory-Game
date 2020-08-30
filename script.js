@@ -58,16 +58,18 @@ function createDivsForColors(colorArray) {
 }
 
 // TODO: Implement this function!
-let first_color, secound_color, memory_game, count = 0 ,current_clicks;
+let first_color, secound_color, memory_game, count = 0,
+  current_clicks;
+
 function handleCardClick(event) {
   // you can use event.target to see which element was clicked
-  console.log("you clicked",event.target);
+  console.log("you clicked", event.target);
   if (!current_clicks) {
     event.target.style.backgroundColor = event.target.className;
   } else return;
   if (memory_game) {
     secound_color = event.target;
-    if (secound_color.className.includes("same_color") || secound_color.className.includes("matched")){
+    if (secound_color.className.includes("same_color") || secound_color.className.includes("matched")) {
       return;
     }
     current_clicks = true;
@@ -85,9 +87,7 @@ function handleCardClick(event) {
       current_clicks = false;
       count++;
       if (count === 5) {
-        setTimeout(function () {
-          alert("Congratulations You Have Won");
-        }, 100);
+        alert("Congratulations You Have Won");
       }
     }
   } else {
@@ -99,6 +99,5 @@ function handleCardClick(event) {
     memory_game = true;
   }
 }
-
 // when the DOM loads
 createDivsForColors(shuffledColors);
