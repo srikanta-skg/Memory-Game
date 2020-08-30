@@ -1,4 +1,4 @@
-const gameContainer = document.getElementsById("game");
+const gameContainer = document.getElementById("game");
 
 const COLORS = [
   "red",
@@ -58,9 +58,46 @@ function createDivsForColors(colorArray) {
 }
 
 // TODO: Implement this function!
+let first_color, secound_color, memory_game, count = 0 ,current_clicks;
 function handleCardClick(event) {
   // you can use event.target to see which element was clicked
   console.log("you clicked",event.target);
+  if (!current_clicks) {
+    event.target.style.backgroundColor = event.target.className;
+  } else return;
+  if (memory_game) {
+    secound_color = event.target;
+    if (secound_color.className.includes("same_color") || secound_color.className.includes("matched")){
+      return;
+    }
+    current_clicks = true;
+    first_color.classList.remove("same_color");
+    memory_game = false;
+    if (first_color.className != secound_color.className) {
+      setTimeout(function () {
+        first_color.style.backgroundColor = "white";
+        secound_color.style.backgroundColor = "white";
+        current_clicks = false;
+      }, 1000);
+    } else {
+      first_color.classList.add("matched");
+      secound_color.classList.add("matched");
+      current_clicks = false;
+      count++;
+      if (count === 5) {
+        setTimeout(function () {
+          alert("Congratulations You Have Won");
+        }, 100);
+      }
+    }
+  } else {
+    first_color = event.target;
+    if (first_color.className.includes("matched")) {
+      return;
+    }
+    event.target.classList.add("same_color");
+    memory_game = true;
+  }
 }
 
 // when the DOM loads
