@@ -58,23 +58,23 @@ function createDivsForColors(colorArray) {
 }
 
 // TODO: Implement this function!
-let first_color, secound_color, memory_game, count = 0,
-  current_clicks;
-
+let first_color, secound_color, second_Conditional, current_clicks, count = 0;
 function handleCardClick(event) {
   // you can use event.target to see which element was clicked
   console.log("you clicked", event.target);
+
   if (!current_clicks) {
-    event.target.style.backgroundColor = event.target.className;
+    this.style.backgroundColor = this.className; // this reference to current object, similar to event.target
   } else return;
-  if (memory_game) {
-    secound_color = event.target;
+
+  if (second_Conditional) {
+    secound_color = this;
     if (secound_color.className.includes("same_color") || secound_color.className.includes("matched")) {
       return;
     }
     current_clicks = true;
     first_color.classList.remove("same_color");
-    memory_game = false;
+    second_Conditional = false;
     if (first_color.className != secound_color.className) {
       setTimeout(function () {
         first_color.style.backgroundColor = "white";
@@ -86,17 +86,19 @@ function handleCardClick(event) {
       secound_color.classList.add("matched");
       current_clicks = false;
       count++;
+
       if (count === 5) {
         alert("Congratulations You Have Won");
       }
+
     }
   } else {
-    first_color = event.target;
+    first_color = this;
     if (first_color.className.includes("matched")) {
       return;
     }
-    event.target.classList.add("same_color");
-    memory_game = true;
+    this.classList.add("same_color");
+    second_Conditional = true;
   }
 }
 // when the DOM loads
